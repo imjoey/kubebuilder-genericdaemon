@@ -164,14 +164,16 @@ func (r *ReconcileGenericDaemon) Reconcile(request reconcile.Request) (reconcile
 	// Get the number of Ready daemonsets and set the Count status
 	if found.Status.NumberReady != instance.Status.Count {
 		log.Printf("Updating Status %s/%s\n", instance.Namespace, instance.Name)
+		outdatedStatusCount := instance.Status.Count
 		instance.Status.Count = found.Status.NumberReady
+
 		err = r.Update(context.TODO(), instance)
 		if err != nil {
 			return reconcile.Result{}, err
 		}
 		notifySlack(instance,
 			fmt.Sprintf("GenericDaemon (%s) update count status from %d to %d\n",
-				instance.Name, instance.Status.Count, found.Status.NumberReady))
+				instance.Name, outdatedStatusCount, found.Status.NumberReady))
 	}
 
 	// Update the found object and write the result back if there are any changes
