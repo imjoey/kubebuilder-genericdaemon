@@ -1,0 +1,3 @@
+version: "1"
+domain: mydomain.com
+repo: github.com/imjoey/genericdaemon

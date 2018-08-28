@@ -1,0 +1,10 @@
+apiVersion: mygrouop.mydomain.com/v1beta1
+kind: GenericDaemon
+metadata:
+  labels:
+    controller-tools.k8s.io: "1.0"
+  name: genericdaemon-sample
+spec:
+  # Add fields here
+  image: httpd
+  label: http
